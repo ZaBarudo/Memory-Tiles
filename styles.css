@@ -1,0 +1,47 @@
+* {
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Eras ITC";
+    background-color: #FFF275;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 80px;
+}
+
+.header {
+    font-size: 92px;
+    font-weight: bolder;
+}
+.header-text {
+    margin-top: -50px;
+    font-size: 48px;
+}
+ul {
+    display: flex;
+    gap: 50px;
+}
+li {
+    list-style: none;
+    font-size: 24px;
+    border-radius: 15px;
+    background-color: #FF8C42;
+    padding: 10px 50px;
+    transition: all ease 0.2s;
+}
+
+li.active {
+    transform: scale(1.05);
+    background-color: #ff7621;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
