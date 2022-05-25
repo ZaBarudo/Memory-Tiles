@@ -1,5 +1,5 @@
-choices = document.querySelectorAll('li');
-console.log(choices);
+choices = document.querySelectorAll('.button');
+
 
 choices.forEach(choice => {
     choice.addEventListener('mouseenter', function() {

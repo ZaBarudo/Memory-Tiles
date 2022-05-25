@@ -1,5 +1,5 @@
-TILE_SIZE = 90;
-GRID_SIZE = 4;
+TILE_SIZE = 50;
+GRID_SIZE = 6;
 
 grid = document.querySelector('.grid');
 start = document.querySelector('.start');
@@ -104,7 +104,7 @@ function displayPattern(){
 function userPress(){
     
     if(toBeChosen){
-        if(toBeChosen.includes(this)){
+        if(toBeChosen[0]==this){
 
             if(toBeChosen.length == 1){
                 score++;
@@ -112,7 +112,7 @@ function userPress(){
                 displayPattern();
             }
             else {
-                toBeChosen.splice(toBeChosen.indexOf(this) , 1);
+                toBeChosen.splice(0 , 1);
             }
             
         }

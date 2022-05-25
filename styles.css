@@ -29,14 +29,18 @@ ul {
 }
 li {
     list-style: none;
+}
+
+.button {
     font-size: 24px;
     border-radius: 15px;
     background-color: #FF8C42;
     padding: 10px 50px;
     transition: all ease 0.2s;
+    text-align: center;
 }
 
-li.active {
+.button.active {
     transform: scale(1.05);
     background-color: #ff7621;
 }
@@ -45,3 +49,49 @@ a {
     text-decoration: none;
     color: black;
 }
+
+
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 50px);
+    grid-template-rows: repeat(4, 50px);
+}
+
+.tile {
+    border: solid 1px black;
+    border-radius: 8%;
+    background-color: #ff7621;
+    transition: all ease 0.25s;
+}
+.tile.blink {
+    background-color: #6C8EAD;
+}
+
+.startText {
+    margin-top: -50px;
+    font-size: 42px;
+}
+
+
+.disable {
+    pointer-events: none;
+}
+
+.hide {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.result {
+    border-radius: 5%;
+    padding: 10px 20px;
+    background-color: #38ff9c;
+    position: fixed;
+    bottom: 50%;
+    font-size: 70px;
+    box-shadow: 0px 0px 500px 50px black;
+}
+
+
+
