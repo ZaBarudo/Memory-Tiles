@@ -133,6 +133,7 @@ function userPress(){
     
     // only if toBeChosen is not empty and it's user's turn
     if(toBeChosen && playerTurn){
+        tilePress.currentTime = 0;
         tilePress.play();
         if(toBeChosen[0]==this){
             // if there is only one tile left
@@ -154,6 +155,7 @@ function userPress(){
 // Game over function - Displays Play Again
 function gameOver(){
     lose = true;
+    gameEndSound.currentTime = 0;
     gameEndSound.play();
     toBeChosen = [];
     result.classList.remove('hide');
