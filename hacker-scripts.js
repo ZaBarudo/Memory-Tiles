@@ -7,6 +7,8 @@ playAgain = document.querySelector('.gameover');
 result = document.querySelector('.result');
 resultText = document.querySelector('.resultText');
 startText = document.querySelector('.startText');
+gameEndSound = document.querySelector('#gameEndSound');
+tilePress = document.querySelector('#tilePress');
 
 start.addEventListener('click', startGame);
 playAgain.addEventListener('click', startGame)
@@ -104,6 +106,7 @@ function displayPattern(){
 function userPress(){
     
     if(toBeChosen){
+        tilePress.play();
         if(toBeChosen[0]==this){
 
             if(toBeChosen.length == 1){
@@ -126,6 +129,7 @@ function userPress(){
 
 // Game over function - Displays Play Again
 function gameOver(){
+    gameEndSound.play();
     toBeChosen = [];
     result.classList.remove('hide');
     resultText.textContent = `Score : ${score}`;
