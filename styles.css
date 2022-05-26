@@ -13,6 +13,7 @@ body {
     align-items: center;
     flex-direction: column;
     gap: 80px;
+    position: relative;
 }
 
 .header {
@@ -84,13 +85,24 @@ a {
 }
 
 .result {
+    
     border-radius: 5%;
     padding: 10px 20px;
     background-color: #38ff9c;
-    position: fixed;
-    bottom: 50%;
-    font-size: 70px;
+    
+    position: absolute;
+    text-align: center;
+    font-size: 50px;
     box-shadow: 0px 0px 500px 50px black;
+}
+
+.leaderboard {
+    text-align: center;
+    border: solid 4px black;
+    border-radius: 5%;
+    margin-bottom: 15px;
+    background-color: #FFF275;
+    padding: 10px 20px;
 }
 
 

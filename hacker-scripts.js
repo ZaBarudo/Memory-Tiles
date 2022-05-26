@@ -10,6 +10,7 @@ startText = document.querySelector('.startText');
 gameEndSound = document.querySelector('#gameEndSound');
 tilePress = document.querySelector('#tilePress');
 timer = document.querySelector('.timer');
+leaderboard = document.querySelector('.leaderboard');
 
 start.addEventListener('click', startGame);
 playAgain.addEventListener('click', startGame)
@@ -22,7 +23,9 @@ let round_number = 1;
 let delayInMilliseconds = 500; //1 second
 let score = 0;
 let lose = false;
+let playerTurn = false;
 
+// defining grid
 grid.setAttribute('style',
     `grid-template-columns: repeat(${GRID_SIZE}, ${TILE_SIZE}px);
     grid-template-rows: repeat(${GRID_SIZE}, ${TILE_SIZE}px);` 
@@ -43,6 +46,7 @@ function createInitial(){
 
         grid.appendChild(arrTile[i]);
     }
+
 }
 
 // Make a tile blink
@@ -54,17 +58,6 @@ function blinkEnd(){
     this.classList.remove('blink');
 }
 
-// Timer function
-// function timer(){
-//     var sec = 30;
-//     var timer = setInterval(function(){
-//         document.getElementById('safeTimerDisplay').innerHTML='00:'+sec;
-//         sec--;
-//         if (sec < 0) {
-//             clearInterval(timer);
-//         }
-//     }, 1000);
-// }
 
 // Start Game
 function startGame(){
@@ -72,6 +65,7 @@ function startGame(){
     toBeChosen = [];
     score = 0;
     lose = false;
+    playerTurn = false;
 
     result.classList.add('hide');
     start.classList.add('hide');
@@ -91,8 +85,10 @@ function startGame(){
             Sec = Math.floor(sec%60);
             min = Math.floor(sec/60);
             if (lose) {
-                resultText.textContent = `Score : ${Math.max(0,(round_number-1)*100 - (Sec*1 + min*60))}`
                 clearInterval(timerloop);
+                score = Math.max(0,(round_number-1)*100 - (Sec*1 + min*60));
+                resultText.textContent = `Score : ${score}`
+                displayLeaderboard();
             }
         }, 100);
     }
@@ -109,8 +105,6 @@ function displayPattern(){
     // Disabling user tile press
     arrTile.forEach(tile => {
         tile.classList.add('disable');
-        console.log(tile);
-
     } )  
     startText.classList.add('hide');
     
@@ -119,47 +113,38 @@ function displayPattern(){
         setTimeout(function() {   
             let item = arrTile[Math.floor(Math.random()*arrTile.length)];
             toBeChosen.push(item);
-            console.log(item);
+            
             blink(item);    
         }, delayInMilliseconds*(i+1));
     }
 
-    // Alloweing users to click on Tiles
-    setTimeout(() => {   
-        arrTile.forEach(tile => {
-        tile.classList.remove('disable');
+    // Allowing users to click on Tiles
+    setTimeout(() => {  
+        playerTurn = true; // player can play now
         startText.classList.remove('hide');
-    } ) 
+        arrTile.forEach(tile => {
+            tile.classList.remove('disable');
+        } ) 
     }, delayInMilliseconds*round_number + 250);
-
-
-
-    
-    
-    
-    
 }
-
 
 // User presses Tile
 function userPress(){
     
-    if(toBeChosen){
+    // only if toBeChosen is not empty and it's user's turn
+    if(toBeChosen && playerTurn){
         tilePress.play();
         if(toBeChosen[0]==this){
-
+            // if there is only one tile left
             if(toBeChosen.length == 1){
-                score++;
                 round_number++;
-                displayPattern();
+                displayPattern(); // Go to next round
             }
             else {
                 toBeChosen.splice(0 , 1);
             }
-            
         }
         else {
-        
             gameOver();
         }
     }
@@ -172,6 +157,53 @@ function gameOver(){
     gameEndSound.play();
     toBeChosen = [];
     result.classList.remove('hide');
+}
+
+// Display leaderboard
+function displayLeaderboard(){
+    for(var i = 1; i<=5; i++){
+        if(localStorage.getItem(i)){
+            if(score>localStorage.getItem(i)){
+                moveScoresDown(i);
+                break;
+            }   
+        }else{
+            localStorage.setItem(i, score);
+            break;
+        }
+    }
+
+    console.log(localStorage);
+
+    for(var i = 1; i<=5; i++){
+        let text = '';
+        if(localStorage.getItem(`${i}`)){
+            text = `${i}. ${localStorage.getItem(i)}`;
+            
+        }
+        else{
+            text = `${i}. 0`;
+        }
+        document.getElementById(`${i}`).textContent = text;
+
+    }
+}
+
+// Inserts a score in particular index in local storage
+function moveScoresDown(i){
+    var temp = localStorage.getItem(i.toString());
+    localStorage.setItem(i.toString(), score);
+    for(var j = i+1; j<=4; j++){
+        localStorage.setItem(j.toString(), temp);
+        if(localStorage.getItem(`${j+1}`)){
+            temp = localStorage.getItem(`${j+1}`);
+        }
+        else {
+            break;
+        }
+        
+        
+    }
 }
 
 createInitial();
