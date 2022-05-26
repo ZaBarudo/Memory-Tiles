@@ -16,6 +16,14 @@ body {
     position: relative;
 }
 
+.mainPage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 80px;
+}
+
 .header {
     font-size: 92px;
     font-weight: bolder;
