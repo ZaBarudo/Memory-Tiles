@@ -1,4 +1,4 @@
-TILE_SIZE = 90;
+TILE_SIZE = 60;
 GRID_SIZE = 4;
 
 grid = document.querySelector('.grid');
@@ -16,7 +16,7 @@ let boxSize = TILE_SIZE;
 let arrTile = [];
 let toBeChosen = [];
 let round_number = 1;
-let delayInMilliseconds = 500; //1 second
+let delayInMilliseconds = 500;
 let score = 0;
 let playerTurn = false;
 
@@ -73,25 +73,26 @@ function startGame(){
 function displayPattern(){
     toBeChosen = [];
     
+    // Disabling user tile press
     arrTile.forEach(tile => {
         tile.classList.add('disable');
-        console.log(tile);
-
     } )  
     startText.classList.add('hide');
     
+    // Making random tiles blink and adding them to toBeChosen
     for( let i = 0; i < round_number; i++){
         setTimeout(function() {   
             let item = arrTile[Math.floor(Math.random()*arrTile.length)];
             toBeChosen.push(item);
-            console.log(item);
             blink(item);    
         }, delayInMilliseconds*(i+1));
     }
+
     setTimeout(() => {   
+        playerTurn = true; // player can play now
+        startText.classList.remove('hide');
         arrTile.forEach(tile => {
         tile.classList.remove('disable');
-        startText.classList.remove('hide');
     } ) 
     }, delayInMilliseconds*round_number + 250);
     
@@ -103,7 +104,7 @@ function displayPattern(){
 // User presses Tile
 function userPress(){
     
-    if(toBeChosen){
+    if(toBeChosen && playerTurn){
         if(toBeChosen.includes(this)){
 
             if(toBeChosen.length == 1){

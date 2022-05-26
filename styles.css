@@ -80,6 +80,7 @@ a {
 .startText {
     margin-top: -50px;
     font-size: 42px;
+    text-align: center;
 }
 
 
@@ -111,6 +112,27 @@ a {
     margin-bottom: 15px;
     background-color: #FFF275;
     padding: 10px 20px;
+}
+
+@media only screen and (max-width: 700px) {
+
+    .mainPage .header {
+        text-align: center;
+        font-size: 42px;
+    }
+
+    .mainPage .header-text {
+        font-size: 24px;
+    }
+    
+    ul {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    ul .button {
+        font-size: 24px;
+    }
 }
 
 
