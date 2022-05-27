@@ -14,7 +14,8 @@ playAgain.addEventListener('click', startGame)
 
 let boxSize = TILE_SIZE;
 let arrTile = [];
-let toBeChosen = [];
+let toBeChosen = []; // holds the current tiles in the round
+let toBePopped = []; // a copy of toBeChosen from where tiles will be removed when player clicks
 let round_number = 1;
 let delayInMilliseconds = 500;
 let score = 0;
@@ -55,6 +56,7 @@ function blinkEnd(){
 function startGame(){
     round_number = 1;
     toBeChosen = [];
+    toBePopped = [];
     score = 0;
     playerTurn = false;
 
@@ -71,20 +73,19 @@ function startGame(){
 
 // Displays the pattern for the round
 function displayPattern(){
-    toBeChosen = [];
     
     // Disabling user tile press
     arrTile.forEach(tile => {
         tile.classList.add('disable');
     } )  
     startText.classList.add('hide');
-    
+    let item = arrTile[Math.floor(Math.random()*arrTile.length)];
+    toBeChosen.push(item);
+    toBePopped = [...toBeChosen];
     // Making random tiles blink and adding them to toBeChosen
-    for( let i = 0; i < round_number; i++){
+    for( let i = 0; i < toBeChosen.length; i++){
         setTimeout(function() {   
-            let item = arrTile[Math.floor(Math.random()*arrTile.length)];
-            toBeChosen.push(item);
-            blink(item);    
+            blink(toBeChosen[i]);    
         }, delayInMilliseconds*(i+1));
     }
 
@@ -104,16 +105,16 @@ function displayPattern(){
 // User presses Tile
 function userPress(){
     
-    if(toBeChosen && playerTurn){
-        if(toBeChosen.includes(this)){
+    if(toBePopped && playerTurn){
+        if(toBePopped.includes(this)){
 
-            if(toBeChosen.length == 1){
+            if(toBePopped.length == 1){
                 score++;
                 round_number++;
                 displayPattern();
             }
             else {
-                toBeChosen.splice(toBeChosen.indexOf(this) , 1);
+                toBePopped.splice(toBePopped.indexOf(this) , 1);
             }
             
         }

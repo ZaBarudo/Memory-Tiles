@@ -6,14 +6,15 @@
 
 body {
     min-height: 100vh;
+    width: 100%;
     font-family: "Eras ITC";
     background-color: #FFF275;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    text-align: center;
     gap: 80px;
-    position: relative;
 }
 
 .mainPage{
@@ -21,6 +22,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    text-align: center;
     gap: 80px;
 }
 

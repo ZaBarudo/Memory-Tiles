@@ -1,16 +1,16 @@
-TILE_SIZE = 50;
-GRID_SIZE = 6;
+const TILE_SIZE = 50;
+const GRID_SIZE = 6;
 
-grid = document.querySelector('.grid');
-start = document.querySelector('.start');
-playAgain = document.querySelector('.gameover');
-result = document.querySelector('.result');
-resultText = document.querySelector('.resultText');
-startText = document.querySelector('.startText');
-gameEndSound = document.querySelector('#gameEndSound');
-tilePress = document.querySelector('#tilePress');
-timer = document.querySelector('.timer');
-leaderboard = document.querySelector('.leaderboard');
+const grid = document.querySelector('.grid');
+const start = document.querySelector('.start');
+const playAgain = document.querySelector('.gameover');
+const result = document.querySelector('.result');
+const resultText = document.querySelector('.resultText');
+const startText = document.querySelector('.startText');
+const gameEndSound = document.querySelector('#gameEndSound');
+const tilePress = document.querySelector('#tilePress');
+const timer = document.querySelector('.timer');
+const leaderboard = document.querySelector('.leaderboard');
 
 start.addEventListener('click', startGame);
 playAgain.addEventListener('click', startGame)
@@ -19,8 +19,9 @@ playAgain.addEventListener('click', startGame)
 let boxSize = TILE_SIZE;
 let arrTile = [];
 let toBeChosen = [];
+let toBePopped = []; // a copy of toBeChosen from where tiles will be removed when player clicks
 let round_number = 1;
-let delayInMilliseconds = 500; //1 second
+let delayInMilliseconds = 500; 
 let score = 0;
 let lose = false;
 let playerTurn = false;
@@ -63,6 +64,7 @@ function blinkEnd(){
 function startGame(){
     round_number = 1;
     toBeChosen = [];
+    toBePopped = [];
     score = 0;
     lose = false;
     playerTurn = false;
@@ -100,7 +102,7 @@ function startGame(){
 
 // Displays the pattern for the round
 function displayPattern(){
-    toBeChosen = [];
+    
     
     // Disabling user tile press
     arrTile.forEach(tile => {
@@ -108,13 +110,13 @@ function displayPattern(){
     } )  
     startText.classList.add('hide');
     
+    let item = arrTile[Math.floor(Math.random()*arrTile.length)];
+    toBeChosen.push(item);
+    toBePopped = [...toBeChosen];
     // Making random tiles blink and adding them to toBeChosen
-    for( let i = 0; i < round_number; i++){
+    for( let i = 0; i < toBeChosen.length; i++){
         setTimeout(function() {   
-            let item = arrTile[Math.floor(Math.random()*arrTile.length)];
-            toBeChosen.push(item);
-            
-            blink(item);    
+            blink(toBeChosen[i]);    
         }, delayInMilliseconds*(i+1));
     }
 
@@ -132,17 +134,17 @@ function displayPattern(){
 function userPress(){
     
     // only if toBeChosen is not empty and it's user's turn
-    if(toBeChosen && playerTurn){
+    if(toBePopped && playerTurn){
         tilePress.currentTime = 0;
         tilePress.play();
-        if(toBeChosen[0]==this){
+        if(toBePopped[0]==this){
             // if there is only one tile left
-            if(toBeChosen.length == 1){
+            if(toBePopped.length == 1){
                 round_number++;
                 displayPattern(); // Go to next round
             }
             else {
-                toBeChosen.splice(0 , 1);
+                toBePopped.splice(0 , 1);
             }
         }
         else {
