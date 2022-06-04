@@ -80,8 +80,9 @@ a {
 }
 
 .startText {
-    margin-top: -50px;
-    font-size: 42px;
+    position: absolute;
+    bottom: 10%;
+    font-size: 32px;
     text-align: center;
 }
 
@@ -93,6 +94,12 @@ a {
 .hide {
     visibility: hidden;
     opacity: 0;
+}
+
+.done {
+    bottom: 25%;
+    position: absolute;
+    
 }
 
 .result {
